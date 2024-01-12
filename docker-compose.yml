@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  express-app:
+    image: pkoivisto/express-app:latest
+    ports:
+      - 8080:8080
+    container_name: express-app
+  watchtower:
+    image: containrrr/watchtower
+    command: express-app
+    environment:
+      -  WATCHTOWER_POLL_INTERVAL=10 # Poll every 10 seconds
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: watchtower
